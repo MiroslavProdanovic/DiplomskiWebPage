@@ -1,6 +1,8 @@
 $(document).ready(function(){
 	dataHandler();
 	setInterval(dataHandler, 5000);
+	currentDateTime();
+	setInterval(currentDateTime, 1000);
 });
 
 function dataHandler(){
@@ -111,4 +113,13 @@ function dataHandler(){
 			console.log(data);
 		}
 	});
+}
+
+function currentDateTime() {
+    $.ajax({
+        url: 'https://pracenje-parametara-susare.herokuapp.com/currentdatetime.php',
+        success: function(receivedData) {
+            $('#currentDateTime').html(receivedData);
+        },
+    });
 }

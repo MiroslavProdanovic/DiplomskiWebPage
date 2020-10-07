@@ -12,7 +12,7 @@ if(!$mysqli){
   die("Connection failed: " . $mysqli->error);
 }
 
-$query = sprintf("SELECT * FROM SensorReadings ORDER BY DateTime DESC LIMIT 20");
+$query = sprintf("SELECT * FROM SensorReadings ORDER BY ID DESC LIMIT 20");
 
 $result = $mysqli->query($query);
 

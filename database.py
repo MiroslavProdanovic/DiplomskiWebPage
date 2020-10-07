@@ -23,8 +23,8 @@ while True:
 
 	cursor.execute(sql, values)
 	db.commit()
-	cursor.execute("SELECT * FROM SensorReadings ORDER BY DateTime DESC LIMIT 1")
+	cursor.execute("SELECT * FROM SensorReadings ORDER BY ID DESC LIMIT 1")
 	result = cursor.fetchall()
-	print "Inserted values... Date & Time = {:}".format(result[0][0]), " | Temperature = {:.1f}".format(result[0][1]), " | Humidity = {:.1f}".format(result[0][2])
+	print "Inserted values... ID = {:}".format(result[0][0]), " | Date & Time = {:}".format(result[0][1])," | Temperature = {:.1f}".format(result[0][2]), " | Humidity = {:.1f}".format(result[0][3)
 	time.sleep(5)
 

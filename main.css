@@ -36,13 +36,13 @@ body{
 }
 
 .currentDateTimeTitle{
-	font-size: 30px;
-}
-
-#currentDateTime{
 	font-size: 20px;
     font-weight: 600;
     margin-top: 20px;
+}
+
+#currentDateTime{
+	font-size: 30px;
 }
 
 @media (max-width: 767px){

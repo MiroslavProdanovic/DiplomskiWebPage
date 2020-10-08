@@ -38,7 +38,7 @@
 				</div>
 				
 				<div class="col-xs-12 col-md-6">
-					<p>Trenutno vreme:</p>
+					<p class="currentDateTimeTitle">Trenutno vreme:</p>
 					<p id="currentDateTime"></p>
 				</div>
 			</div>

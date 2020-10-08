@@ -2,6 +2,20 @@ import Adafruit_DHT
 import MySQLdb
 import datetime
 import time
+import sendgrid
+import os
+from sendgrid.helpers.mail import *
+
+sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('mailsending'))
+from_email = Email("app186703148@heroku.com")
+subject = "Hello World!"
+to_email = Email("prodanovicmiroslav64@gmail.com")
+content = Content("text/plain", "Hello, Email!")
+mail = Mail(from_email, subject, to_email, content)
+response = sg.client.mail.send.post(request_body=mail.get())
+print(response.status_code)
+print(response.body)
+print(response.headers)
 
 used_sensor = Adafruit_DHT.DHT22
 pin = 4

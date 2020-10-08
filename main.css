@@ -46,6 +46,12 @@ body{
 }
 
 @media (max-width: 767px){
+	#currentDateTime{
+		font-size: 24px;
+	}
+}
+
+@media (max-width: 767px){
 	.map-wrapper iframe{
 		height: 300px;
 	}

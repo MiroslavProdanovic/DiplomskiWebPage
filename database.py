@@ -1,21 +1,17 @@
 import Adafruit_DHT
 import MySQLdb
+import sys
 import datetime
 import time
-import sendgrid
-import os
-from sendgrid.helpers.mail import *
+import smtplib
 
-sg = sendgrid.SendGridAPIClient(apikey=os.environ.get('mailsending'))
-from_email = Email("app186703148@heroku.com")
-subject = "Hello World!"
-to_email = Email("prodanovicmiroslav64@gmail.com")
-content = Content("text/plain", "Hello, Email!")
-mail = Mail(from_email, subject, to_email, content)
-response = sg.client.mail.send.post(request_body=mail.get())
-print(response.status_code)
-print(response.body)
-print(response.headers)
+sender = "diplomski.test123@gmail.com"
+receiver = "prodanovicmiroslav64@gmail.com"
+password = raw_input("Enter your email account password: ")
+lowest_temperature = float(raw_input("Enter the value of lowest temperature. If the temperature is less than that value, the email will be sent to you. Enter value: "))
+print("Value of lowest_temperature: ", lowest_temperature)
+print("Type of lowest_temperature: ", type(lowest_temperature))
+print(password)
 
 used_sensor = Adafruit_DHT.DHT22
 pin = 4
@@ -31,6 +27,14 @@ while True:
 		time.sleep(1)
 		print "Reading is not possible at this moment!"
 		continue
+	
+	if temperature < lowest_temperature:
+		server = smtplib.SMTP('smtp.gmail.com', 587)
+		server.starttls()
+		server.login(sender, password)
+		message = "Temperature is {:.1f}!".format(temperature) 
+		server.sendmail(sender, receiver, message)
+		print ("Email sent!")
 
 	sql = "INSERT INTO SensorReadings (DateTime, Temperature, Humidity) VALUES (%s, %s, %s)"
 	values = (readingTime, temperature, humidity)

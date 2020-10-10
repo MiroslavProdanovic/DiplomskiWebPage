@@ -6,17 +6,21 @@ import time
 import smtplib
 import getpass
 
-sender = "diplomski.test123@gmail.com"
+sender = "pracenje.parametara.susare@gmail.com"
 receiver = "prodanovicmiroslav64@gmail.com"
-password = getpass.getpass("Enter your email account password: ")
+password = getpass.getpass("Enter system email account password: ")
+
+try:
+	server = smtplib.SMTP('smtp.gmail.com', 587)
+	server.starttls()
+	server.login(sender, password)
+except:
+	print ("Incorrect password!")
+	sys.exit()
+
 email_counter = 0
 minimum_temperature = float(raw_input("Enter the value of minimum temperature. If the temperature is less than that value, the email will be sent to you. Enter value: "))
 maximum_temperature = float(raw_input("Enter the value of maximum temperature. If the temperature is higher than that value, the email will be sent to you. Enter value: "))
-print("Value of minimum_temperature: ", minimum_temperature)
-print("Type of minimum_temperature: ", type(minimum_temperature))
-print("Value of maximum_temperature: ", maximum_temperature)
-print("Type of maximum_temperature: ", type(maximum_temperature))
-print(password)
 
 used_sensor = Adafruit_DHT.DHT22
 pin = 4

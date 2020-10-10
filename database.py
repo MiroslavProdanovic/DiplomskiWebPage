@@ -4,13 +4,18 @@ import sys
 import datetime
 import time
 import smtplib
+import getpass
 
 sender = "diplomski.test123@gmail.com"
 receiver = "prodanovicmiroslav64@gmail.com"
-password = raw_input("Enter your email account password: ")
-lowest_temperature = float(raw_input("Enter the value of lowest temperature. If the temperature is less than that value, the email will be sent to you. Enter value: "))
-print("Value of lowest_temperature: ", lowest_temperature)
-print("Type of lowest_temperature: ", type(lowest_temperature))
+password = getpass.getpass("Enter your email account password: ")
+email_counter = 0
+minimum_temperature = float(raw_input("Enter the value of minimum temperature. If the temperature is less than that value, the email will be sent to you. Enter value: "))
+maximum_temperature = float(raw_input("Enter the value of maximum temperature. If the temperature is higher than that value, the email will be sent to you. Enter value: "))
+print("Value of minimum_temperature: ", minimum_temperature)
+print("Type of minimum_temperature: ", type(minimum_temperature))
+print("Value of maximum_temperature: ", maximum_temperature)
+print("Type of maximum_temperature: ", type(maximum_temperature))
 print(password)
 
 used_sensor = Adafruit_DHT.DHT22
@@ -28,13 +33,15 @@ while True:
 		print "Reading is not possible at this moment!"
 		continue
 	
-	if temperature < lowest_temperature:
-		server = smtplib.SMTP('smtp.gmail.com', 587)
-		server.starttls()
-		server.login(sender, password)
-		message = "Temperature is {:.1f}!".format(temperature) 
-		server.sendmail(sender, receiver, message)
-		print ("Email sent!")
+	if temperature < minimum_temperature or temperature > maximum_temperature:
+		if email_counter < 5:
+			server = smtplib.SMTP('smtp.gmail.com', 587)
+			server.starttls()
+			server.login(sender, password)
+			message = "Temperature is: {:.1f}!".format(temperature)
+			server.sendmail(sender, receiver, message)
+			print ("Email sent!")
+			email_counter += 1
 
 	sql = "INSERT INTO SensorReadings (DateTime, Temperature, Humidity) VALUES (%s, %s, %s)"
 	values = (readingTime, temperature, humidity)
